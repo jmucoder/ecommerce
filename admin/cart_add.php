@@ -13,14 +13,14 @@
 		$row = $stmt->fetch();
 
 		if($row['numrows'] > 0){
-			$_SESSION['error'] = 'Product exist in cart';
+			$_SESSION['error'] = 'El producto existe en el carrito';
 		}
 		else{
 			try{
 				$stmt = $conn->prepare("INSERT INTO cart (user_id, product_id, quantity) VALUES (:user, :product, :quantity)");
 				$stmt->execute(['user'=>$id, 'product'=>$product, 'quantity'=>$quantity]);
 
-				$_SESSION['success'] = 'Product added to cart';
+				$_SESSION['success'] = 'Producto añadido al carrito';
 			}
 			catch(PDOException $e){
 				$_SESSION['error'] = $e->getMessage();

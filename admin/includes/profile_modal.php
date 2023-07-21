@@ -17,28 +17,28 @@
                   	</div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">Password</label>
+                    <label for="password" class="col-sm-3 control-label">Contraseña</label>
 
                     <div class="col-sm-9"> 
                       <input type="password" class="form-control" id="password" name="password" value="<?php echo $admin['password']; ?>">
                     </div>
                 </div>
                 <div class="form-group">
-                  	<label for="firstname" class="col-sm-3 control-label">Firstname</label>
+                  	<label for="firstname" class="col-sm-3 control-label">Nombre</label>
 
                   	<div class="col-sm-9">
                     	<input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $admin['firstname']; ?>">
                   	</div>
                 </div>
                 <div class="form-group">
-                  	<label for="lastname" class="col-sm-3 control-label">Lastname</label>
+                  	<label for="lastname" class="col-sm-3 control-label">Apellido</label>
 
                   	<div class="col-sm-9">
                     	<input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $admin['lastname']; ?>">
                   	</div>
                 </div>
                 <div class="form-group">
-                    <label for="photo" class="col-sm-3 control-label">Photo:</label>
+                    <label for="photo" class="col-sm-3 control-label">Foto:</label>
 
                     <div class="col-sm-9">
                       <input type="file" id="photo" name="photo">
@@ -46,10 +46,10 @@
                 </div>
                 <hr>
                 <div class="form-group">
-                    <label for="curr_password" class="col-sm-3 control-label">Current Password:</label>
+                    <label for="curr_password" class="col-sm-3 control-label">Contraseña actual:</label>
 
                     <div class="col-sm-9">
-                      <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="input current password to save changes" required>
+                      <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="Ingrese la contraseña actual para guardar los cambios" required>
                     </div>
                 </div>
           	</div>

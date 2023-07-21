@@ -6,16 +6,14 @@
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Sales History
+        Historial de Ventas
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sales</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Hogar</a></li>
+        <li class="active">Ventas</li>
       </ol>
     </section>
 
@@ -33,7 +31,6 @@
                     </div>
                     <input type="text" class="form-control pull-right col-sm-8" id="reservation" name="date_range">
                   </div>
-                  <button type="submit" class="btn btn-success btn-sm btn-flat" name="print"><span class="glyphicon glyphicon-print"></span> Print</button>
                 </form>
               </div>
             </div>
@@ -41,11 +38,11 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
-                  <th>Date</th>
-                  <th>Buyer Name</th>
-                  <th>Transaction#</th>
-                  <th>Amount</th>
-                  <th>Full Details</th>
+                  <th>Fecha</th>
+                  <th>Nombre del comprador</th>
+                  <th>Transacción#</th>
+                  <th>Monto</th>
+                  <th>Detalles completos</th>
                 </thead>
                 <tbody>
                   <?php
@@ -69,7 +66,7 @@
                             <td>".$row['firstname'].' '.$row['lastname']."</td>
                             <td>".$row['pay_id']."</td>
                             <td>&#36; ".number_format($total, 2)."</td>
-                            <td><button type='button' class='btn btn-info btn-sm btn-flat transact' data-id='".$row['salesid']."'><i class='fa fa-search'></i> View</button></td>
+                            <td><button type='button' class='btn btn-info btn-sm btn-flat transact' data-id='".$row['salesid']."'><i class='fa fa-search'></i> Ver</button></td>
                           </tr>
                         ";
                       }

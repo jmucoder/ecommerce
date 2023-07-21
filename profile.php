@@ -44,16 +44,16 @@
 	        				<div class="col-sm-9">
 	        					<div class="row">
 	        						<div class="col-sm-3">
-	        							<h4>Name:</h4>
+	        							<h4>Nombre:</h4>
 	        							<h4>Email:</h4>
-	        							<h4>Contact Info:</h4>
-	        							<h4>Address:</h4>
-	        							<h4>Member Since:</h4>
+	        							<h4>Información de contacto:</h4>
+	        							<h4>Dirección:</h4>
+	        							<h4>Miembro desde:</h4>
 	        						</div>
 	        						<div class="col-sm-9">
 	        							<h4><?php echo $user['firstname'].' '.$user['lastname']; ?>
 	        								<span class="pull-right">
-	        									<a href="#edit" class="btn btn-success btn-flat btn-sm" data-toggle="modal"><i class="fa fa-edit"></i> Edit</a>
+	        									<a href="#edit" class="btn btn-success btn-flat btn-sm" data-toggle="modal"><i class="fa fa-edit"></i> Editar</a>
 	        								</span>
 	        							</h4>
 	        							<h4><?php echo $user['email']; ?></h4>
@@ -67,47 +67,40 @@
 	        		</div>
 	        		<div class="box box-solid">
 	        			<div class="box-header with-border">
-	        				<h4 class="box-title"><i class="fa fa-calendar"></i> <b>Transaction History</b></h4>
+	        				<h4 class="box-title"><i class="fa fa-calendar"></i> <b>Historial de transacciones</b></h4>
 	        			</div>
 	        			<div class="box-body">
 	        				<table class="table table-bordered" id="example1">
 	        					<thead>
 	        						<th class="hidden"></th>
-	        						<th>Date</th>
-	        						<th>Transaction#</th>
-	        						<th>Amount</th>
-	        						<th>Full Details</th>
+	        						<th>Fecha</th>
+	        						<th>Transacción#</th>
+	        						<th>Cantidad</th>
+	        						<th>Detalle completo</th>
 	        					</thead>
 	        					<tbody>
 	        					<?php
 	        						$conn = $pdo->open();
 
 	        						try{
-	        							$stmt = $conn->prepare("SELECT * FROM sales WHERE user_id=:user_id ORDER BY sales_date DESC");
-	        							$stmt->execute(['user_id'=>$user['id']]);
-	        							foreach($stmt as $row){
-	        								$stmt2 = $conn->prepare("SELECT * FROM details LEFT JOIN products ON products.id=details.product_id WHERE sales_id=:id");
-	        								$stmt2->execute(['id'=>$row['id']]);
-	        								$total = 0;
-	        								foreach($stmt2 as $row2){
-	        									$subtotal = $row2['price']*$row2['quantity'];
-	        									$total += $subtotal;
-	        								}
-	        								echo "
-	        									<tr>
-	        										<td class='hidden'></td>
-	        										<td>".date('M d, Y', strtotime($row['sales_date']))."</td>
-	        										<td>".$row['pay_id']."</td>
-	        										<td>&#36; ".number_format($total, 2)."</td>
-	        										<td><button class='btn btn-sm btn-flat btn-info transact' data-id='".$row['id']."'><i class='fa fa-search'></i> View</button></td>
-	        									</tr>
-	        								";
-	        							}
-
-	        						}
-        							catch(PDOException $e){
-										echo "There is some problem in connection: " . $e->getMessage();
+										$stmt = $conn->prepare("SELECT * FROM sales WHERE user_id=:user_id ORDER BY sales_date DESC");
+										$stmt->execute(['user_id'=>$user['id']]);
+										foreach($stmt as $row){
+											echo "
+												<tr>
+													<td class='hidden'></td>
+													<td>".date('M d, Y', strtotime($row['sales_date']))."</td>
+													<td>".$row['pay_id']."</td>
+													<td>&#36; ".number_format($row['total'], 2)."</td> <!-- Aquí se muestra el total -->
+													<td><button class='btn btn-sm btn-flat btn-info transact' data-id='".$row['id']."'><i class='fa fa-search'></i> Ver</button></td>
+												</tr>
+											";
+										}
 									}
+									catch(PDOException $e){
+										echo "Hay algun problema de conexion: " . $e->getMessage();
+									}
+									
 
 	        						$pdo->close();
 	        					?>

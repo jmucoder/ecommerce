@@ -14,7 +14,7 @@ Class Database{
  			return $this->conn;
  		}
  		catch (PDOException $e){
- 			echo "There is some problem in connection: " . $e->getMessage();
+ 			echo "Hay algun problema de conexion: " . $e->getMessage();
  		}
  
     }
