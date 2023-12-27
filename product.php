@@ -12,10 +12,9 @@
 		
 	}
 	catch(PDOException $e){
-		echo "There is some problem in connection: " . $e->getMessage();
+		echo "Hay algun problema de conexion: " . $e->getMessage();
 	}
 
-	//page view
 	$now = date('Y-m-d');
 	if($product['date_view'] == $now){
 		$stmt = $conn->prepare("UPDATE products SET counter=counter+1 WHERE id=:id");
@@ -71,7 +70,7 @@
 							            </span>
 							            <input type="hidden" value="<?php echo $product['prodid']; ?>" name="id">
 							        </div>
-			            			<button type="submit" class="btn btn-primary btn-lg btn-flat"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+			            			<button type="submit" class="btn btn-primary btn-lg btn-flat"><i class="fa fa-shopping-cart"></i> Añadir al carrito</button>
 			            		</div>
 		            		</form>
 		            	</div>

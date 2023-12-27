@@ -16,7 +16,7 @@
 		$row = $stmt->fetch();
 
 		if($row['numrows'] > 0){
-			$_SESSION['error'] = 'Email already taken';
+			$_SESSION['error'] = 'Correo electrónico ya tomado';
 		}
 		else{
 			$password = password_hash($password, PASSWORD_DEFAULT);
@@ -28,7 +28,7 @@
 			try{
 				$stmt = $conn->prepare("INSERT INTO users (email, password, firstname, lastname, address, contact_info, photo, status, created_on) VALUES (:email, :password, :firstname, :lastname, :address, :contact, :photo, :status, :created_on)");
 				$stmt->execute(['email'=>$email, 'password'=>$password, 'firstname'=>$firstname, 'lastname'=>$lastname, 'address'=>$address, 'contact'=>$contact, 'photo'=>$filename, 'status'=>1, 'created_on'=>$now]);
-				$_SESSION['success'] = 'User added successfully';
+				$_SESSION['success'] = 'Usuario añadido con éxito';
 
 			}
 			catch(PDOException $e){
@@ -39,7 +39,7 @@
 		$pdo->close();
 	}
 	else{
-		$_SESSION['error'] = 'Fill up user form first';
+		$_SESSION['error'] = 'Rellene el formulario de usuario primero';
 	}
 
 	header('location: users.php');

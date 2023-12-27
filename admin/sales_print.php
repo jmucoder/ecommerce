@@ -61,15 +61,15 @@
 	    $pdf->AddPage();  
 	    $content = '';  
 	    $content .= '
-	      	<h2 align="center">TechSoft IT Solutions</h2>
-	      	<h4 align="center">SALES REPORT</h4>
+	      	<h2 align="center">TechSoft IT Soluciones</h2>
+	      	<h4 align="center">REPORTE DE VENTAS</h4>
 	      	<h4 align="center">'.$from_title." - ".$to_title.'</h4>
 	      	<table border="1" cellspacing="0" cellpadding="3">  
 	           <tr>  
-	           		<th width="15%" align="center"><b>Date</b></th>
-	                <th width="30%" align="center"><b>Buyer Name</b></th>
-					<th width="40%" align="center"><b>Transaction#</b></th>
-					<th width="15%" align="center"><b>Amount</b></th>  
+	           		<th width="15%" align="center"><b>Fecha</b></th>
+	                <th width="30%" align="center"><b>Nombre del comprador</b></th>
+					<th width="40%" align="center"><b>Transacción#</b></th>
+					<th width="15%" align="center"><b>Monto</b></th>  
 	           </tr>  
 	      ';  
 	    $content .= generateRow($from, $to, $conn);  
@@ -81,7 +81,7 @@
 
 	}
 	else{
-		$_SESSION['error'] = 'Need date range to provide sales print';
+		$_SESSION['error'] = 'Necesita rango de fechas para proporcionar impresión de ventas';
 		header('location: sales.php');
 	}
 ?>

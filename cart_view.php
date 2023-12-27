@@ -12,35 +12,38 @@
 	      <section class="content">
 	        <div class="row">
 	        	<div class="col-sm-9">
-	        		<h1 class="page-header">YOUR CART</h1>
+	        		<h1 class="page-header">Tu carrito</h1>
 	        		<div class="box box-solid">
 	        			<div class="box-body">
 		        		<table class="table table-bordered">
 		        			<thead>
 		        				<th></th>
-		        				<th>Photo</th>
-		        				<th>Name</th>
-		        				<th>Price</th>
-		        				<th width="20%">Quantity</th>
+		        				<th>Foto</th>
+		        				<th>Nombre</th>
+		        				<th>Precio</th>
+		        				<th width="20%">Cantidad</th>
 		        				<th>Subtotal</th>
 		        			</thead>
 		        			<tbody id="tbody">
 		        			</tbody>
 		        		</table>
+						<div class="form-group">
+							<br>
+							<label for="discount_code">Código de descuento</label>
+							<input type="text" class="form-control" id="discount_code" placeholder="Introduce tu código de descuento">
+							<br>
+							<button id="validate_code" class="btn btn-success">Validar código</button>
+						</div>
+						<p>Precio Final</p>
+						<b>
+							<p id="total"></p>
+						</b>
 	        			</div>
 	        		</div>
-	        		<?php
-	        			if(isset($_SESSION['user'])){
-	        				echo "
-	        					<div id='paypal-button'></div>
-	        				";
-	        			}
-	        			else{
-	        				echo "
-	        					<h4>You need to <a href='login.php'>Login</a> to checkout.</h4>
-	        				";
-	        			}
-	        		?>
+
+					<a href="#" class="btn btn-primary" id="buyButton" style="display: none;" onclick="buy()">Comprar</a>
+
+	        	
 	        	</div>
 	        	<div class="col-sm-3">
 	        		<?php include 'includes/sidebar.php'; ?>
@@ -55,6 +58,9 @@
 </div>
 
 <?php include 'includes/scripts.php'; ?>
+
+
+
 <script>
 var total = 0;
 $(function(){
@@ -75,6 +81,28 @@ $(function(){
 			}
 		});
 	});
+
+	$(document).on('click', '#validate_code', function() {
+        var discount_code = $('#discount_code').val();
+        $.ajax({
+            url: 'verify_discount_code.php',
+            type: 'POST',
+            data: {discount_code: discount_code},
+            success: function(response) {
+                if (response == 'valid') {
+                    // Aplica el descuento del 10% al total
+                    total = total * 0.9;
+					total = total.toFixed(2);
+                    // Actualiza el total en la página
+					
+                    $('#total').text('$' + total);
+                } else {
+                    // Muestra un mensaje de error si el código de descuento no es válido
+                    alert('Código de descuento no válido');
+                }
+            }
+        });
+    });
 
 	$(document).on('click', '.minus', function(e){
 		e.preventDefault();
@@ -139,6 +167,12 @@ function getDetails(){
 		success: function(response){
 			$('#tbody').html(response);
 			getCart();
+			if(response.length > 112){
+				console.log(response.length)
+				$('#buyButton').show();
+			} else {
+				$('#buyButton').hide();
+			}
 		}
 	});
 }
@@ -150,50 +184,16 @@ function getTotal(){
 		dataType: 'json',
 		success:function(response){
 			total = response;
+			// Actualiza el total en la página
+			$('#total').text(total);
 		}
 	});
 }
+
+function buy() {
+    window.location.href = 'sales.php?total=' + total;
+}
 </script>
-<!-- Paypal Express -->
-<script>
-paypal.Button.render({
-    env: 'sandbox', // change for production if app is live,
 
-	client: {
-        sandbox:    'ASb1ZbVxG5ZFzCWLdYLi_d1-k5rmSjvBZhxP2etCxBKXaJHxPba13JJD_D3dTNriRbAv3Kp_72cgDvaZ',
-        //production: 'AaBHKJFEej4V6yaArjzSx9cuf-UYesQYKqynQVCdBlKuZKawDDzFyuQdidPOBSGEhWaNQnnvfzuFB9SM'
-    },
-
-    commit: true, // Show a 'Pay Now' button
-
-    style: {
-    	color: 'gold',
-    	size: 'small'
-    },
-
-    payment: function(data, actions) {
-        return actions.payment.create({
-            payment: {
-                transactions: [
-                    {
-                    	//total purchase
-                        amount: { 
-                        	total: total, 
-                        	currency: 'INR' 
-                        }
-                    }
-                ]
-            }
-        });
-    },
-
-    onAuthorize: function(data, actions) {
-        return actions.payment.execute().then(function(payment) {
-			window.location = 'sales.php?pay='+payment.id;
-        });
-    },
-
-}, '#paypal-button');
-</script>
 </body>
 </html>
